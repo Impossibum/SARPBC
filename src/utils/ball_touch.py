@@ -21,12 +21,14 @@ class BallTouch:
         """
 
     def __eq__(self, other: BallTouch) -> bool:
-        if type(other) != BallTouch \
-                or self.player_name != other.player_name \
-                or self.hit_location != other.hit_location \
-                or self.team != other.team \
-                or self.player_index != other.player_index \
-                or self.time_seconds != other.time_seconds:
+        if (
+            type(other) != BallTouch
+            or self.player_name != other.player_name
+            or self.hit_location != other.hit_location
+            or self.team != other.team
+            or self.player_index != other.player_index
+            or self.time_seconds != other.time_seconds
+        ):
             return False
 
         return True

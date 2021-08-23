@@ -1,7 +1,11 @@
 from __future__ import annotations
 import numpy as np
 from math import atan2, pi
-import utils.misc_tools as misc_tools
+
+try:
+    import utils.misc_tools as misc_tools
+except:
+    import misc_tools
 
 
 # Physics Data Object
@@ -98,31 +102,31 @@ def pdo_test() -> None:
     a = PDO(np.array([1, 2, 3]))
     b = PDO(np.array([4, 5, 6]))
     print(f"Repr and str test passed?: {str(a) == 'x = 1, y = 2, z = 3'}")
-    print(f"Len test passed?: {len(a)==3}")
+    print(f"Len test passed?: {len(a) == 3}")
     print(f"Get_item test passed?: {a[1] == 2}")
     print(f"To_list test passed?: {a.to_list() == [1, 2, 3]}")
-    print(f"Multiplication test passed?: {(a*b).to_list() == [4, 10, 18]}")
+    print(f"Multiplication test passed?: {(a * b).to_list() == [4, 10, 18]}")
     print(f"Addition test passed?: {(a + b).to_list() == [5, 7, 9]}")
-    print(f"Subtraction test passed?: {str(a-b)=='x = -3, y = -3, z = -3'}")
-    print(f"Cross Product test passed?: {str(a.cross_product(b))=='x = -3, y = 6, z = -3'}")
+    print(f"Subtraction test passed?: {str(a - b) == 'x = -3, y = -3, z = -3'}")
+    print(f"Cross Product test passed?: {str(a.cross_product(b)) == 'x = -3, y = 6, z = -3'}")
     print(
-        f"Magnitude test passed?: {misc_tools.close_enough(a.magnitude(),3.7416573867739413)}"
+        f"Magnitude test passed?: {misc_tools.close_enough(a.magnitude(), 3.7416573867739413)}"
     )
     # print(
     #     f"Normalize test passed?: {a.normalize().to_list()==[0.2672612419124244, 0.5345224838248488, 0.8017837257372732]}"
     # )
     val1, val2, val3 = a.normalize().to_list()
     print(
-        f"""Normalize test passed?: {misc_tools.close_enough(val1,0.2672612419124244) and 
-                                     misc_tools.close_enough(val2,0.5345224838248488) and 
-                                     misc_tools.close_enough(val3,0.8017837257372732)}"""
+        f"""Normalize test passed?: {misc_tools.close_enough(val1, 0.2672612419124244) and
+                                     misc_tools.close_enough(val2, 0.5345224838248488) and
+                                     misc_tools.close_enough(val3, 0.8017837257372732)}"""
     )
     print(f"Dot product test passed?: {a.dot(b) == 32}")
     print(
-        f"Correction to test passed?: {misc_tools.close_enough(a.correction_to(b),0.2110933332227467)}"
+        f"Correction to test passed?: {misc_tools.close_enough(a.correction_to(b), 0.2110933332227467)}"
     )
     print(f"Scale test passed?: {a.scale(2).to_list() == [2, 4, 6]}")
-    print(f"Lerp test passed?: {a.lerp(b,0.5).to_list() == [2.5, 3.5, 4.5]}")
+    print(f"Lerp test passed?: {a.lerp(b, 0.5).to_list() == [2.5, 3.5, 4.5]}")
 
 
 if __name__ == "__main__":

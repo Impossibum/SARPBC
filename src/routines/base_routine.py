@@ -3,19 +3,19 @@ from rlbot.utils.structures.game_data_struct import GameTickPacket
 import utils.car as car_module
 
 
-# Medium-long term task which may include maneuvers or even other mechanics!
-class BaseMechanic:
+# Medium-long term task which may include maneuvers or even other routines!
+class BaseRoutine:
     def __init__(self, car: car_module.Car, packet: GameTickPacket) -> None:
         self.car = car
         self.finished = False
         self.controls = PlayerInput()
         self.maneuver = None
-        self.mechanic = None
+        self.routine = None
 
     def update(self, packet: GameTickPacket) -> PlayerInput:
         if self.maneuver and not self.maneuver.finished:
             return self.maneuver.update(self, packet)
-        elif self.mechanic and not self.mechanic.finished:
-            return self.mechanic.update(self, packet)
+        elif self.routine and not self.routine.finished:
+            return self.routine.update(self, packet)
         else:
             return self.controls

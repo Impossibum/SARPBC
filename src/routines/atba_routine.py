@@ -1,5 +1,5 @@
 import numpy as np
-from mechanics.base_mechanic import BaseMechanic
+from routines.base_routine import BaseRoutine
 from maneuvers.front_flip_maneuver import FrontFlip
 from utils.physics_data_object import PDO
 from utils.simple_drive import drive
@@ -8,7 +8,7 @@ from rlbot.utils.structures.bot_input_struct import PlayerInput
 import utils.car as car_module
 
 
-class ATBA(BaseMechanic):
+class ATBA(BaseRoutine):
     def __init__(self, car: car_module.Car, packet: GameTickPacket) -> None:
         super().__init__(car, packet)
 
