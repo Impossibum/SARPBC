@@ -2,11 +2,11 @@
 
 This template is meant as a solid foundation for the creation of a hivemind rlbot bot.
 
-##Framework Concept:
+## Framework Concept:
 
-###Maneuvers:
+### Maneuvers:
 
-###Routines
+### Routines
 
-###Strategies
+### Strategies
 
