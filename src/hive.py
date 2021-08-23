@@ -20,6 +20,7 @@ class SARPBC(PythonHivemind):
         self.team = packet.game_cars[index].team
         self.delta_time = 1/120
         self.old_game_time = 0
+        self.last_touch = None
         self.dtype = [
             (
                 "physics",
@@ -57,6 +58,7 @@ class SARPBC(PythonHivemind):
         self.old_game_time = self.current_packet.game_info.seconds_elapsed
         self.ball_predictions = self.convert_ball_predictions()
         self.update_drones()
+        self.last_touch = BallTouch(self.current_packet)
 
     def get_outputs(self, packet: GameTickPacket) -> Dict[int, PlayerInput]:
         self.process_packet(packet)
