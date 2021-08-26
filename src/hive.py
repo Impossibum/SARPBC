@@ -6,35 +6,19 @@ from rlbot.utils.structures.game_data_struct import GameTickPacket
 from rlbot.agents.hivemind.python_hivemind import PythonHivemind
 from utils.physics_data_object import PDO
 from utils.car import Car
-from utils.ball_touch import BallTouch
 from utils.sarpbc_car import BattleCar
 from strategies.atba_swarm_strategy import ATBA_Swarm
+from typing import Type
+import utils.game_data as game_data
 
 
 class SARPBC(PythonHivemind):
     def initialize_hive(self, packet: GameTickPacket) -> None:
         self.logger.info("Initialised!")
         self.drones = []
-        self.current_packet = packet
         index = next(iter(self.drone_indices))
         self.team = packet.game_cars[index].team
-        self.delta_time = 1/120
-        self.old_game_time = 0
-        self.last_touch = None
-        self.dtype = [
-            (
-                "physics",
-                [
-                    ("location", "<f4", 3),
-                    ("rotation", [("pitch", "<f4"), ("yaw", "<f4"), ("roll", "<f4")]),
-                    ("velocity", "<f4", 3),
-                    ("angular_velocity", "<f4", 3),
-                ],
-            ),
-            ("game_seconds", "<f4"),
-        ]
-
-        self.ball_predictions = self.convert_ball_predictions()
+        self.game_data = game_data.GameData(self, packet)
 
         for index in self.drone_indices:
             self.drones.append(BattleCar(self.team, index, self))
@@ -44,7 +28,7 @@ class SARPBC(PythonHivemind):
 
     def update_drones(self) -> None:
         for drone in self.drones:
-            drone.update_car(self.current_packet)
+            drone.update_car(self.game_data)
 
     def convert_ball_predictions(self) -> np.array:
         ball_prediction_struct = self.get_ball_prediction_struct()
@@ -53,12 +37,9 @@ class SARPBC(PythonHivemind):
         ]
 
     def process_packet(self, packet: GameTickPacket) -> None:
-        self.current_packet = deepcopy(packet)
-        self.delta_time = self.current_packet.game_info.seconds_elapsed - self.old_game_time
-        self.old_game_time = self.current_packet.game_info.seconds_elapsed
-        self.ball_predictions = self.convert_ball_predictions()
+        self.game_data.update(packet)
         self.update_drones()
-        self.last_touch = BallTouch(self.current_packet)
+
 
     def get_outputs(self, packet: GameTickPacket) -> Dict[int, PlayerInput]:
         self.process_packet(packet)

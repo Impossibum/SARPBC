@@ -8,7 +8,7 @@ class ATBA_Swarm(BaseStrategy):
     def __init__(self, hivemind: Type[PythonHivemind]) -> None:
         super().__init__(hivemind)
         for drone in self.hivemind.drones:
-            drone.routine = ATBA(drone.car, self.hivemind.current_packet)
+            drone.routine = ATBA(drone.car, self.hivemind.game_data)
 
     def get_actions(self) -> dict:
         # This is the brains of the hivemind. Which bot should be going for the ball, getting boost?

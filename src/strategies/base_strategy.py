@@ -10,6 +10,6 @@ class BaseStrategy:
         # This is the brains of the hivemind. Which bot should be going for the ball, getting boost?
         # Is it kickoff? Better assign the leading bot to a kickoff_maneuver! etc
         return {
-            drone.index: drone.get_controls(self.hivemind.current_packet)
+            drone.index: drone.get_controls()
             for drone in self.hivemind.drones
         }
